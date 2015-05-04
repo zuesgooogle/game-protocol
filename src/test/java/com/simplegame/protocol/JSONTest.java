@@ -35,8 +35,11 @@ public class JSONTest {
 		System.out.println( new String(bytes) );
 		
 		bytes = encrypt.decode(bytes);
-		System.out.println( new String(bytes) );
+		String back = new String(bytes);
+		System.out.println( back );
 		
+		array = JSONArray.parseArray(back);
+		System.out.println(array);
 	}
 
 }
