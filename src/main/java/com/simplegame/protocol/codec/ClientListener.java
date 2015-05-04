@@ -1,4 +1,4 @@
-package com.simplegame.protocol.coder;
+package com.simplegame.protocol.codec;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;

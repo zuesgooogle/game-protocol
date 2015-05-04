@@ -3,8 +3,8 @@ package com.simplegame.protocol;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSONArray;
-import com.simplegame.protocol.coder.ClientListener;
-import com.simplegame.protocol.coder.ServerListener;
+import com.simplegame.protocol.codec.ClientListener;
+import com.simplegame.protocol.codec.ServerListener;
 
 /**
  *
@@ -35,9 +35,9 @@ public class ServerLinstenerTest extends BasicTest {
 		inner.add(true);
 		array.add(inner.toArray());
 		
-		client.sendMessage(array.toString() + "\r\n");
+		client.sendMessage(array.toArray());
 		
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 	}
 	
 }

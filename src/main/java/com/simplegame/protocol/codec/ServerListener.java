@@ -1,4 +1,4 @@
-package com.simplegame.protocol.coder;
+package com.simplegame.protocol.codec;
 
 import javax.annotation.PostConstruct;
 

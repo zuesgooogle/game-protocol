@@ -1,4 +1,4 @@
-package com.simplegame.protocol.coder;
+package com.simplegame.protocol.codec;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
  * @sine   2015年5月4日 上午10:48:43
  *
  */
-public class ServerHandler extends SimpleChannelInboundHandler<String> {
+public class ClientHandler extends SimpleChannelInboundHandler<String> {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-		LOG.info("server receive message: {}", msg);
+		
 	}
 
 }
