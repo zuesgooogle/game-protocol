@@ -4,12 +4,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.simplegame.protocol.message.Message;
+import com.simplegame.protocol.utils.SerializableUtil;
 
 /**
  *
@@ -20,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class NetDecoder extends ByteToMessageDecoder {
 
-	private final Logger LOG = LoggerFactory.getLogger(getClass());
+	//private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
 	protected void decode(ChannelHandlerContext ch, ByteBuf in, List<Object> out) throws Exception {
@@ -39,16 +37,8 @@ public class NetDecoder extends ByteToMessageDecoder {
 		byte[] decoded = new byte[dataLength];
 		in.readBytes(decoded);
 		
-		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(decoded));
-        try {
-            Object object = ois.readObject();
-            
-            out.add(object);
-        } catch (Exception e) {
-            LOG.error("", e);
-        }
+		Object object = SerializableUtil.bytes2Object(decoded);
+		out.add( new Message((Object[])object));
+
 	}
-
-	
-
 }

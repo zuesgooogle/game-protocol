@@ -23,17 +23,27 @@ public class ServerLinstenerTest extends BasicTest {
 		ClientListener client = ctx.getBean(ClientListener.class);
 		client.start();
 		
+		/**
+		 * Message Body 
+		 * 0: command 		Not Null 
+		 * 1: data 			Not Null 
+		 * 2: sessionId 
+		 * 3: roleId
+		 * 4: accountId 
+		 * 5: stageId 
+		 * 6: token
+		 * 
+		 */
+		
 		//Data
 		JSONArray array = new JSONArray();
-		array.add(1);
-		array.add("test");
-		array.add(2);
+		array.add("1001");
 		
-		JSONArray inner = new JSONArray();
-		inner.add(3);
-		inner.add("hellow");
-		inner.add(true);
-		array.add(inner.toArray());
+		JSONArray data = new JSONArray();
+		data.add(3);
+		data.add("hellow");
+		data.add(true);
+		array.add(data.toArray());
 		
 		client.sendMessage(array.toArray());
 		

@@ -1,7 +1,5 @@
 package com.simplegame.protocol.codec;
 
-import javax.annotation.PostConstruct;
-
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
@@ -34,11 +32,6 @@ public class ServerListener {
 	private ChannelInitializer initializer;
 
 	private boolean success = false;
-	
-	@PostConstruct
-	public void init() {
-
-	}
 
 	public void start() {
 		bossGroup = new NioEventLoopGroup(getBossThreadSize());
