@@ -13,11 +13,14 @@ public class Message {
 	 * Message Body 
 	 * 0: command 		Not Null 
 	 * 1: data 			Not Null 
-	 * 2: sessionId 
-	 * 3: roleId
-	 * 4: accountId 
-	 * 5: stageId 
-	 * 6: token
+	 * 2: dest type     消息目标通道
+	 * 3： from type		消息来源通道
+	 * 4: route			消息路由
+	 * 5: sessionId 
+	 * 6: roleId
+	 * 7: accountId 
+	 * 8: stageId 
+	 * 9: token
 	 * 
 	 */
 	private Object[] msgSource;
@@ -34,8 +37,12 @@ public class Message {
 		return (T) this.msgSource[1];
 	}
 
+	public int getRoute() {
+		return (Integer)this.msgSource[4];
+	}
+	
 	public long getSessionId() {
-		Object sessionId = this.msgSource[2];
+		Object sessionId = this.msgSource[5];
 		if (null != sessionId) {
 			return ((Long) sessionId).longValue();
 		}
@@ -43,15 +50,15 @@ public class Message {
 	}
 
 	public String getRoleId() {
-		return (String) this.msgSource[3];
+		return (String) this.msgSource[6];
 	}
 
 	public String getAccountId() {
-		return (String) this.msgSource[4];
+		return (String) this.msgSource[7];
 	}
 
 	public String getStageId() {
-		Object stageId = this.msgSource[5];
+		Object stageId = this.msgSource[8];
 		if (null != stageId) {
 			return (String) stageId;
 		}
@@ -59,7 +66,7 @@ public class Message {
 	}
 
 	public Object[] getToken() {
-		Object stageId = this.msgSource[5];
+		Object stageId = this.msgSource[9];
 		if (null != stageId) {
 			return (Object[]) stageId;
 		}

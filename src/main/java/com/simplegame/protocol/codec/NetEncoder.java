@@ -1,7 +1,5 @@
 package com.simplegame.protocol.codec;
 
-import com.simplegame.protocol.utils.SerializableUtil;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -11,16 +9,15 @@ import io.netty.handler.codec.MessageToByteEncoder;
  * @sine   2015年5月4日 下午10:45:52 
  *
  */
-public class NetEncoder extends MessageToByteEncoder<Object[]> {
+public class NetEncoder extends MessageToByteEncoder<byte[]> {
 
 	@Override
-	protected void encode(ChannelHandlerContext ch, Object[] msg, ByteBuf out) throws Exception {
-		byte[] data = SerializableUtil.object2Bytes(msg);
+	protected void encode(ChannelHandlerContext ch, byte[] msg, ByteBuf out) throws Exception {
 		
-		int dataLength = data.length;
+		int msgLength = msg.length;
 		
-		out.writeInt(dataLength);
-		out.writeBytes(data);
+		out.writeInt(msgLength);
+		out.writeBytes(msg);
 	}
 
 }

@@ -5,6 +5,7 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSONArray;
 import com.simplegame.protocol.codec.ClientListener;
 import com.simplegame.protocol.codec.ServerListener;
+import com.simplegame.protocol.utils.SerializableUtil;
 
 /**
  *
@@ -13,13 +14,10 @@ import com.simplegame.protocol.codec.ServerListener;
  *
  */
 
-public class ServerLinstenerTest extends BasicTest {
+public class ClientLinstenerTest extends BasicTest {
 
 	@Test
 	public void start() throws InterruptedException {
-		ServerListener server = ctx.getBean(ServerListener.class);
-		server.start();
-		
 		ClientListener client = ctx.getBean(ClientListener.class);
 		client.start();
 		
@@ -45,7 +43,8 @@ public class ServerLinstenerTest extends BasicTest {
 		data.add(true);
 		array.add(data.toArray());
 		
-		client.sendMessage(array.toArray());
+		byte[] msg = SerializableUtil.object2Bytes(data.toArray());
+		client.sendMessage(msg);
 		
 		Thread.sleep(3000);
 	}

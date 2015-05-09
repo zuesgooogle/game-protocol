@@ -2,11 +2,8 @@ package com.simplegame.protocol.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
-import java.util.List;
-
-import com.simplegame.protocol.message.Message;
 import com.simplegame.protocol.utils.SerializableUtil;
 
 /**
@@ -16,29 +13,30 @@ import com.simplegame.protocol.utils.SerializableUtil;
  *
  */
 
-public class NetDecoder extends ByteToMessageDecoder {
+public class NetDecoder extends LengthFieldBasedFrameDecoder {
 
-	//private final Logger LOG = LoggerFactory.getLogger(getClass());
-
-	@Override
-	protected void decode(ChannelHandlerContext ch, ByteBuf in, List<Object> out) throws Exception {
-		if(in.readableBytes() < 4) {
-			return;
-		}
-		
-		in.markReaderIndex();
-		
-		int dataLength = in.readInt();
-		if(in.readableBytes() < dataLength) {
-			in.resetReaderIndex();
-			return;
-		}
-		
-		byte[] decoded = new byte[dataLength];
-		in.readBytes(decoded);
-		
-		Object object = SerializableUtil.bytes2Object(decoded);
-		out.add( new Message((Object[])object));
-
+	public static final int MAX_FRAME_LENGTH = 1024 * 1024; //1KB  
+	
+	public NetDecoder() {
+		super(MAX_FRAME_LENGTH, 0, 4);
 	}
+	
+	public NetDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength) {
+		super(maxFrameLength, lengthFieldOffset, lengthFieldLength);
+	}
+	
+    @Override
+    protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+        ByteBuf frame = (ByteBuf) super.decode(ctx, in);
+        if (frame == null) {
+            return null;
+        }
+
+        byte[] decoded = new byte[frame.readInt()];
+        frame.readBytes(decoded);
+        
+        Object object = SerializableUtil.bytes2Object(decoded);
+        
+        return object;
+    }
 }
