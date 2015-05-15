@@ -1,0 +1,13 @@
+package netty;
+option java_package = "com.simplegame.protocol.proto";
+option java_outer_classname = "Message";
+
+message Request {
+	required string command = 1;
+	required string data = 2;
+}
+
+message Response {
+	required string command = 1;
+	required string data = 2;
+}

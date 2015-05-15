@@ -1,9 +1,17 @@
 package com.simplegame.protocol.codec;
 
+import java.util.List;
+
+import com.simplegame.protocol.proto.Message.Request;
+
 import io.netty.channel.ChannelInboundHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
 /**
  * 
@@ -13,20 +21,27 @@ import io.netty.channel.socket.SocketChannel;
  */
 public class NetInitializer extends ChannelInitializer<SocketChannel> {
 
-	private ChannelInboundHandler handler;
+	private List<ChannelInboundHandler> handlers;
 
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ChannelPipeline pipeline = ch.pipeline();
 
-		pipeline.addLast("decoder", new NetDecoder());
-		pipeline.addLast("encoder", new NetEncoder());
+		//decoder
+		pipeline.addLast(new ProtobufVarint32FrameDecoder());
+		pipeline.addLast(new ProtobufDecoder(Request.getDefaultInstance()));
 
-		pipeline.addLast("handler", handler);
+		//encoder
+		pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
+		pipeline.addLast(new ProtobufEncoder());
+		
+		for (ChannelInboundHandler h : handlers) {
+			pipeline.addLast("handler" + h.getClass().getSimpleName(), h);
+		}
 	}
 
-	public void setHandler(ChannelInboundHandler handler) {
-		this.handler = handler;
+	public void setHandlers(List<ChannelInboundHandler> handlers) {
+		this.handlers = handlers;
 	}
 
 }
