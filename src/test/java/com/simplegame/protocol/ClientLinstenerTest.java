@@ -5,6 +5,7 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSONArray;
 import com.simplegame.protocol.codec.ClientListener;
 import com.simplegame.protocol.codec.ServerListener;
+import com.simplegame.protocol.proto.Message.Request;
 import com.simplegame.protocol.utils.SerializableUtil;
 
 /**
@@ -43,8 +44,11 @@ public class ClientLinstenerTest extends BasicTest {
 		data.add(true);
 		array.add(data.toArray());
 		
-		byte[] msg = SerializableUtil.object2Bytes(data.toArray());
-		client.sendMessage(msg);
+		Request.Builder builder = Request.newBuilder();
+		builder.setCommand("110")
+		       .setData(array.toJSONString());
+		
+		client.sendMessage(builder);
 		
 		Thread.sleep(3000);
 	}
