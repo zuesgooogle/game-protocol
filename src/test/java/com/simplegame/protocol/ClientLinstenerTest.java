@@ -45,12 +45,12 @@ public class ClientLinstenerTest extends BasicTest {
 		array.add(data.toArray());
 		
 		Request.Builder builder = Request.newBuilder();
-		builder.setCommand("110")
+		builder.setCommand("10001")
 		       .setData(array.toJSONString());
 		
 		client.sendMessage(builder);
 		
-		Thread.sleep(3000);
+		Thread.sleep(30000);
 	}
 	
 }

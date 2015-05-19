@@ -11,14 +11,15 @@ public class Message {
 
 	/**
 	 * Message Body 
-	 * 0: command 		Not Null 
-	 * 1: data 			Not Null 
-	 * 2: dest type     消息目标通道
-	 * 3： from type		消息来源通道
-	 * 4: route			消息路由
+	 * 
+	 * 0: command Not Null 
+	 * 1: data Not Null 
+	 * 2: dest type 消息目标通道
+	 * 3：from type 消息来源通道 
+	 * 4: route 消息路由
 	 * 5: sessionId 
-	 * 6: roleId
-	 * 7: accountId 
+	 * 6: roleId 
+	 * 7: userId 
 	 * 8: stageId 
 	 * 9: token
 	 * 
@@ -38,22 +39,18 @@ public class Message {
 	}
 
 	public int getRoute() {
-		return (Integer)this.msgSource[4];
+		return (Integer) this.msgSource[4];
 	}
-	
-	public long getSessionId() {
-		Object sessionId = this.msgSource[5];
-		if (null != sessionId) {
-			return ((Long) sessionId).longValue();
-		}
-		return 0L;
+
+	public String getSessionId() {
+		return (String)this.msgSource[5];
 	}
 
 	public String getRoleId() {
 		return (String) this.msgSource[6];
 	}
 
-	public String getAccountId() {
+	public String getUserId() {
 		return (String) this.msgSource[7];
 	}
 
@@ -80,6 +77,88 @@ public class Message {
 	@Override
 	public String toString() {
 		return JSONArray.toJSONString(this.msgSource);
+	}
+
+	public enum FromType {
+
+		CLIENT(1),
+
+		BUS(2),
+
+		STAGE(3),
+
+		;
+
+		private final int value;
+
+		private FromType(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return this.value;
+		}
+
+		public static FromType getType(int type) {
+			switch (type) {
+			case 1:
+				return CLIENT;
+			case 2:
+				return BUS;
+			case 3:
+				return STAGE;
+			default:
+				throw new IllegalArgumentException("invalid frome type.");
+			}
+
+		}
+	}
+
+	public enum DestType {
+
+		CLIENT(0),
+
+		BUS(1),
+
+		STAGE(2),
+
+		INOUT(3),
+
+		PUBLIC(4),
+
+		SYSTEM(5),
+
+		;
+
+		private final int value;
+
+		private DestType(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return this.value;
+		}
+
+		public static DestType getType(int type) {
+			switch (type) {
+			case 0:
+				return CLIENT;
+			case 1:
+				return BUS;
+			case 2:
+				return STAGE;
+			case 3:
+				return INOUT;
+			case 4:
+				return PUBLIC;
+			case 5:
+				return SYSTEM;
+			default:
+				throw new IllegalArgumentException("invalid frome type.");
+			}
+
+		}
 	}
 
 }
