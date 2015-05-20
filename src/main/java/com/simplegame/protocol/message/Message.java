@@ -99,7 +99,7 @@ public class Message {
 			return this.value;
 		}
 
-		public static FromType getType(int type) {
+		public static FromType findType(int type) {
 			switch (type) {
 			case 1:
 				return CLIENT;
@@ -140,7 +140,7 @@ public class Message {
 			return this.value;
 		}
 
-		public static DestType getType(int type) {
+		public static DestType findType(int type) {
 			switch (type) {
 			case 0:
 				return CLIENT;
