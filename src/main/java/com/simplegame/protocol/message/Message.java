@@ -87,6 +87,8 @@ public class Message {
 
 		STAGE(3),
 
+		STAGE_CONTROL(4),
+
 		;
 
 		private final int value;
@@ -107,6 +109,8 @@ public class Message {
 				return BUS;
 			case 3:
 				return STAGE;
+			case 4:
+			    return STAGE_CONTROL;
 			default:
 				throw new IllegalArgumentException("invalid frome type.");
 			}
@@ -120,13 +124,17 @@ public class Message {
 
 		BUS(1),
 
-		STAGE(2),
+		STAGE_CONTROL(2),
 
-		INOUT(3),
+		STAGE(3),
+		
+		INOUT(4),
 
-		PUBLIC(4),
+		BUS_INIT(5),
 
-		SYSTEM(5),
+		PUBLIC(6),
+		
+		INNER_SYSTEM(7),
 
 		;
 
@@ -147,13 +155,17 @@ public class Message {
 			case 1:
 				return BUS;
 			case 2:
-				return STAGE;
+				return STAGE_CONTROL;
 			case 3:
-				return INOUT;
+				return STAGE;
 			case 4:
-				return PUBLIC;
+				return INOUT;
 			case 5:
-				return SYSTEM;
+				return BUS_INIT;
+			case 6:
+			    return PUBLIC;
+			case 7:
+			    return INNER_SYSTEM;
 			default:
 				throw new IllegalArgumentException("invalid frome type.");
 			}
