@@ -92,4 +92,22 @@ public class ClientLinstenerTest extends BasicTest {
 		Thread.sleep(30000);
 	}
 	
+	@Test
+	public void login() throws InterruptedException {
+	    //
+	    ClientListener client = ctx.getBean(ClientListener.class);
+        client.start();
+        
+        //Data
+        JSONArray array = new JSONArray();
+        array.add("fu0UR1-13-0-1");      //roleId
+        
+        Request.Builder builder = Request.newBuilder();
+        builder.setCommand("10003")
+               .setData(array.toJSONString());
+        
+        client.sendMessage(builder);
+        
+        Thread.sleep(30000);
+	}
 }

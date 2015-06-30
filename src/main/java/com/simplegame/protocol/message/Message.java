@@ -22,6 +22,7 @@ public class Message {
 	 * 7: userId 
 	 * 8: stageId 
 	 * 9: token
+	 *10: ip 
 	 * 
 	 */
 	private Object[] msgSource;
@@ -69,6 +70,10 @@ public class Message {
 		}
 		return null;
 	}
+	
+    public String getIp() {
+        return (String) this.msgSource[10];
+    }
 
 	public Object[] getMsgSource() {
 		return this.msgSource;
