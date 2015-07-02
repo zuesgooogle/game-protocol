@@ -35,10 +35,15 @@ public class Message {
 		return (String) this.msgSource[0];
 	}
 
-	public <T> T getData() {
+	@SuppressWarnings("unchecked")
+    public <T> T getData() {
 		return (T) this.msgSource[1];
 	}
 
+	public String toData() {
+	    return JSONArray.toJSONString(getData());
+	}
+	
 	public int getRoute() {
 		return (Integer) this.msgSource[4];
 	}

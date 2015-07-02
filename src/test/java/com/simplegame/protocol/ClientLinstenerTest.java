@@ -1,14 +1,11 @@
 package com.simplegame.protocol;
 
-import java.util.Arrays;
-
+import org.junit.Before;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSONArray;
 import com.simplegame.protocol.codec.ClientListener;
-import com.simplegame.protocol.codec.ServerListener;
 import com.simplegame.protocol.proto.Message.Request;
-import com.simplegame.protocol.utils.SerializableUtil;
 
 /**
  *
@@ -19,23 +16,16 @@ import com.simplegame.protocol.utils.SerializableUtil;
 
 public class ClientLinstenerTest extends BasicTest {
 
-	@Test
-	public void proto() {
-		//Data
-		
-		Request.Builder builder = Request.newBuilder();
-		builder.setCommand("10001")
-		       .setData("123456");		
-		
-		byte[] bytes = builder.build().toByteArray();
-		System.out.println( Arrays.toString(bytes) );
-	}
+    private ClientListener client;
+    
+    @Before
+    public void init() {
+        client = ctx.getBean(ClientListener.class);
+        client.start();
+    }
 	
 	@Test
 	public void in() throws InterruptedException {
-		ClientListener client = ctx.getBean(ClientListener.class);
-		client.start();
-		
 		/**
 		 * Message Body 
 		 * 0: command 		Not Null 
@@ -64,6 +54,8 @@ public class ClientLinstenerTest extends BasicTest {
 		       .setData(array.toJSONString());
 		
 		client.sendMessage(builder);
+		
+		login();
 		
 		Thread.sleep(30000);
 	}
@@ -94,9 +86,6 @@ public class ClientLinstenerTest extends BasicTest {
 	
 	@Test
 	public void login() throws InterruptedException {
-	    //
-	    ClientListener client = ctx.getBean(ClientListener.class);
-        client.start();
         
         //Data
         JSONArray array = new JSONArray();
