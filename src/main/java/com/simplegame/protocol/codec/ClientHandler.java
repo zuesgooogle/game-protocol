@@ -1,5 +1,6 @@
 package com.simplegame.protocol.codec;
 
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -14,6 +15,7 @@ import com.simplegame.protocol.proto.Message.Response;
  * @sine   2015年5月4日 上午10:48:43
  *
  */
+@Sharable
 public class ClientHandler extends SimpleChannelInboundHandler<Response> {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());

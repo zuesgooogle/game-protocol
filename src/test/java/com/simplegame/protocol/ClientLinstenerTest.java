@@ -67,7 +67,7 @@ public class ClientLinstenerTest extends BasicTest {
 		
 		//Data
 		JSONArray array = new JSONArray();
-		array.add("vip1"); 		//userId
+		array.add("vip2"); 		//userId
 		array.add("1");    		//serverId
 		array.add("我是VIP"); 	//name
 		array.add("A"); 		//job A, B, C, D
