@@ -16,6 +16,8 @@ import com.simplegame.protocol.proto.Message.Request;
 
 public class ClientLinstenerTest extends BasicTest {
 
+    private String roleId = "fu0UR1-74-0-1";
+    
     private ClientListener client;
     
     @Before
@@ -24,6 +26,10 @@ public class ClientLinstenerTest extends BasicTest {
         client.start();
     }
 	
+    /**
+     * 账号进入，获取角色列表 
+     * 
+     */
 	@Test
 	public void in() throws InterruptedException {
 		/**
@@ -55,11 +61,15 @@ public class ClientLinstenerTest extends BasicTest {
 		
 		client.sendMessage(builder);
 		
-		login();
+		createRole();
 		
 		Thread.sleep(30000);
 	}
 	
+	/**
+	 * 创建角色
+	 * 
+	 */
 	@Test
 	public void createRole() throws InterruptedException {
 		ClientListener client = ctx.getBean(ClientListener.class);
@@ -67,7 +77,7 @@ public class ClientLinstenerTest extends BasicTest {
 		
 		//Data
 		JSONArray array = new JSONArray();
-		array.add("vip2"); 		//userId
+		array.add("vip1"); 		//userId
 		array.add("1");    		//serverId
 		array.add("我是VIP"); 	//name
 		array.add("A"); 		//job A, B, C, D
@@ -84,12 +94,16 @@ public class ClientLinstenerTest extends BasicTest {
 		Thread.sleep(30000);
 	}
 	
+	/**
+	 * 角色登录 
+	 * 
+	 */
 	@Test
 	public void login() throws InterruptedException {
         
         //Data
         JSONArray array = new JSONArray();
-        array.add("fu0UR1-13-0-1");      //roleId
+        array.add(roleId);      //roleId
         
         Request.Builder builder = Request.newBuilder();
         builder.setCommand("10003")
@@ -97,6 +111,49 @@ public class ClientLinstenerTest extends BasicTest {
         
         client.sendMessage(builder);
         
+        Thread.sleep(10000);
+        applyChangeMap();
+        
+        Thread.sleep(10000);
+        changeMap();
+        
         Thread.sleep(30000);
 	}
+	
+	/**
+	 * 
+	 * 请求进入场景
+	 * 
+	 */
+	@Test
+	public void applyChangeMap() throws InterruptedException {
+	    //Data
+        JSONArray array = new JSONArray();
+        
+        Request.Builder builder = Request.newBuilder();
+        builder.setCommand("20000")
+               .setData(array.toJSONString());
+        
+        client.sendMessage(builder);
+        
+        
+	}
+	
+	 /**
+     * 
+     * 进入场景
+     * 
+     */
+    @Test
+    public void changeMap() throws InterruptedException {
+        //Data
+        JSONArray array = new JSONArray();
+        
+        Request.Builder builder = Request.newBuilder();
+        builder.setCommand("21000")
+               .setData(array.toJSONString());
+        
+        client.sendMessage(builder);
+        
+    }
 }
