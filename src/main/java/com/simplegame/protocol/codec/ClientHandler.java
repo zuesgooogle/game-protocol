@@ -4,8 +4,8 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.simplegame.protocol.proto.Message.Response;
 
@@ -18,7 +18,7 @@ import com.simplegame.protocol.proto.Message.Response;
 @Sharable
 public class ClientHandler extends SimpleChannelInboundHandler<Response> {
 
-	private final Logger LOG = LoggerFactory.getLogger(getClass());
+    private Logger LOG = LogManager.getLogger(getClass());
 	
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Response msg) throws Exception {

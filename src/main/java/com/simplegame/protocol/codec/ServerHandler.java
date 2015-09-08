@@ -4,8 +4,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.AttributeKey;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
 import com.simplegame.protocol.message.Message;
@@ -18,7 +18,7 @@ import com.simplegame.protocol.message.Message;
  */
 public class ServerHandler extends SimpleChannelInboundHandler<Message> {
 
-	private final Logger LOG = LoggerFactory.getLogger(getClass());
+    private Logger LOG = LogManager.getLogger(getClass());
 	
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
